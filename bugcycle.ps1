@@ -1,3 +1,9 @@
+param([string]$queryId)
+if ( $queryId -eq "" -or $queryId -eq $null )
+{
+    write-host "Learn query id is mandatory"
+    exit;
+}
 
 $task_types = @(
     "Replication",
@@ -66,7 +72,8 @@ function Get-RESTAPI($url,$headers)
 #Gets the bugs currently in progress.
 function Get-BugsInProgress()
 {
-    $url = "https://dev.azure.com/AnthologyInc-01/Encompass/_apis/wit/wiql/a98be7d5-a4de-4c5a-8af8-45f5494f2346?api-version=5.0"; # Change the dashboard query id.
+    $url = 'https://dev.azure.com/AnthologyInc-01/Learn/_apis/wit/wiql/{0}?api-version=5.0' -f $queryId
+    write-host $url
     $headers = Create-Headers
     $response = Get-RESTAPI $url $headers
     #Invoke-RestMethod $url -Method 'GET' -Headers $headers -StatusCodeVariable 'statusCode'
