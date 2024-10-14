@@ -73,7 +73,6 @@ function Get-RESTAPI($url,$headers)
 function Get-BugsInProgress()
 {
     $url = 'https://dev.azure.com/AnthologyInc-01/Learn/_apis/wit/wiql/{0}?api-version=5.0' -f $queryId
-    write-host $url
     $headers = Create-Headers
     $response = Get-RESTAPI $url $headers
     #Invoke-RestMethod $url -Method 'GET' -Headers $headers -StatusCodeVariable 'statusCode'
