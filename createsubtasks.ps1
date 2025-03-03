@@ -84,7 +84,7 @@ function Get-WorkItem-ByWiql($title)
     $headers.Add("Content-Type", "application/json")
 
     $url = "https://dev.azure.com/AnthologyInc-01/Learn/_apis/wit/wiql?api-version=6.0"
-    $title = $title.Replace("'","''").Replace('"','""');
+    #$title = $title.Replace("'","''").Replace('"','\"');
     $body = "
     {
         `"query`": `"Select [System.Id] From WorkItems where [System.WorkItemType] = 'Task' and [System.State] <> 'Cancelled' and [System.Title] = '$title'`"
@@ -139,6 +139,7 @@ function Create-SubTasks($title,$url,$areaPath,$userId)
     {
         write-host "Creating task for $item, checking if the task already exists."
         $new_title = '{0} - {1}' -f $item, $title
+	$new_title  = $new_title.Replace("'","''").Replace('"','\"');
         $child = Get-WorkItem-ByWiql $new_title
         if( $child -and $child -ne "" )
         {
